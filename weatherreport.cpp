@@ -21,7 +21,7 @@ class IWeatherSensor {
 /// without needing the actual Sensor during development
 
 class SensorStub : public IWeatherSensor {
-public:
+ public:
     int Humidity() const override {
         return 72;
     }
@@ -76,28 +76,25 @@ void TestHighPrecipitationAndLowWindspeed() {
     // (function returns Sunny day, it should predict rain)
     string report = Report(sensor);
     assert(report.length() > 0);
-    
+
     // Current values are 26, 70, 72, 52 should return "Rainy day"
     assert(report == "Rainy day");
     // Check for "Partly cloudy"
     if (sensor.TemperatureInC() > 25 &&
         sensor.Precipitation() >= 20 &&
-        sensor.Precipitation() < 60) 
-    {   
+        sensor.Precipitation() < 60) {
         assert(report == "Partly cloudy");
     }
     if (sensor.TemperatureInC() > 25 &&
-        sensor.WindSpeedKMPH() > 50) 
-    {
+        sensor.WindSpeedKMPH() > 50) {
         assert(report == "Partly cloudy");
     }
     // Check for "Sunny day"
     if (sensor.TemperatureInC() > 25 &&
        (sensor.Precipitation() < 20 ||sensor.Precipitation() >= 60)&&
-       sensor.WindSpeedKMPH() <= 50) 
-    {
+       sensor.WindSpeedKMPH() <= 50) {
         assert(report == "Sunny day");
-    }  
+    }
 }
 }  // namespace WeatherSpace
 
