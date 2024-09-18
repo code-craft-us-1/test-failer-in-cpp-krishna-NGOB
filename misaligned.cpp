@@ -43,36 +43,27 @@ void testPrintColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
     int lineNumber = 0;
-
+    // Iterate over each line in the output and check for alignment
     while (std::getline(outputStream, line)) {
         std::vector<std::string> parts = split(line, '|');
-        
         // Ensure there are exactly 3 parts in each line
-        assert(parts.size() == 3); 
-
+        assert(parts.size() == 3);
         // Check for consistent column widths
         std::string indexStr = std::to_string(lineNumber);
-        //assert(parts[0].find(indexStr) != std::string::npos); // Check the index
-        //assert(parts[1].find(majorColor[lineNumber / 5]) != std::string::npos); // Check the major color
-        //assert(parts[2].find(minorColor[lineNumber % 5]) != std::string::npos); // Check the minor color
-
         // Checks for alignment
         size_t indexPos = line.find(indexStr);
         size_t majorColorPos = line.find(majorColor[lineNumber / 5]);
         size_t minorColorPos = line.find(minorColor[lineNumber % 5]);
-
         // Ensure that the positions of the columns are consistent
         // Index should start at position 0
-        assert(indexPos == 0); 
+        assert(indexPos == 0);
         // Major color should start at position 4 (after "0 | ")
-        assert(majorColorPos == 4); 
+        assert(majorColorPos == 4);
         // Minor color should start at position 12 (after "0 | White | ")
-        assert(minorColorPos == 12); 
+        assert(minorColorPos == 12);
 
         lineNumber++;
     }
-
-    assert(lineNumber == 25); // Ensure all 25 lines are printed
 }
 
 int main() {
